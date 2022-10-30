@@ -1,0 +1,12 @@
+using TakeMeHome.API.TakeMeHome.Domain.Models;
+using TakeMeHome.API.TakeMeHome.Domain.Services.Communication;
+
+namespace TakeMeHome.API.TakeMeHome.Domain.Services;
+
+public interface IOrderService
+{
+    Task<IEnumerable<Order>> ListAsync();
+    Task<OrderResponse> SaveAsync(Order order);
+    Task<OrderResponse> UpdateAsync(int id, Order order);
+    Task<OrderResponse> DeleteAsync(int id);
+}
