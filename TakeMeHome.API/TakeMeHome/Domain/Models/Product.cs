@@ -8,4 +8,8 @@ public class Product
     public int Price { get; set; }
     public string Store { get; set; }
     public string Currency { get; set; }
+    
+    //Relationships
+    public int OrderId { get; set; }
+    public Order Order { get; set; }
 }

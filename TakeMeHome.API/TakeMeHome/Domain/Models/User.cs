@@ -15,4 +15,7 @@ public class User
     public int Points { get; set; }
     public int Rating { get; set; }
     public string Phone { get; set; }
+
+    //Relationships
+    public IList<Order> Orders { get; set; } = new List<Order>();
 }
