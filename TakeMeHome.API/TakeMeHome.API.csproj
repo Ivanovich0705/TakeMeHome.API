@@ -11,9 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Shared" />
       <Folder Include="TakeMeHome\Domain\Repositories" />
-      <Folder Include="TakeMeHome\Domain\Services" />
+      <Folder Include="TakeMeHome\Domain\Services\Communication" />
     </ItemGroup>
 
 </Project>
