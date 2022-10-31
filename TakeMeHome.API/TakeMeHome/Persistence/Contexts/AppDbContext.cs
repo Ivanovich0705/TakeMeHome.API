@@ -10,11 +10,13 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<User> Users{ get; set; }
-
+    public DbSet<User> Users { get; set; }
+    public DbSet<Order> Orders { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        
+        //Users
         builder.Entity<User>().ToTable("Users");
         builder.Entity<User>().HasKey(p => p.Id);
         builder.Entity<User>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
@@ -28,6 +30,26 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(p => p.PhotoUrl).IsRequired();
         builder.Entity<User>().Property(p => p.Points).IsRequired();
         builder.Entity<User>().Property(p => p.IdNumber).IsRequired();
+        
+        //Relationships
+        builder.Entity<User>()
+            .HasMany(p => p.Orders)
+            .WithOne(p => p.User)
+            .HasForeignKey(p => p.UserId);
+        
+        
+        
+        //Orders
+        builder.Entity<Order>().ToTable("Orders");
+        builder.Entity<Order>().HasKey(p => p.Id);
+        builder.Entity<Order>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Order>().Property(p => p.OrderCode).IsRequired();
+        builder.Entity<Order>().Property(p => p.OriginCountry).IsRequired().HasMaxLength(15);
+        builder.Entity<Order>().Property(p => p.OrderDestination).IsRequired();
+        builder.Entity<Order>().Property(p => p.RequestDate).IsRequired();
+        builder.Entity<Order>().Property(p => p.DeadlineDate).IsRequired();
+        builder.Entity<Order>().Property(p => p.CurrentProcess).IsRequired().HasMaxLength(4);
+        
         
         //App Naming Conventions
         builder.UseSnakeCaseNamingConvention();

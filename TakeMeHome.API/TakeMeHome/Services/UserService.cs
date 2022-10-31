@@ -37,13 +37,56 @@ public class UserService : IUserService
         }
     }
 
-    public Task<UserResponse> UpdateAsync(int id, User user)
+    public async Task<UserResponse> UpdateAsync(int id, User user)
     {
-        throw new NotImplementedException();
+        var existingUser = await _userRepository.FindByIdAsync(id);
+        
+        if(existingUser == null)
+            return new UserResponse("User not found.");
+
+        existingUser.FullName = user.FullName;
+        existingUser.Username = user.Username;
+        existingUser.Password = user.Password;
+        existingUser.Email = user.Email;
+        existingUser.DateOfBirth = user.DateOfBirth;
+        existingUser.Phone = user.Phone;
+        existingUser.Description = user.Description;
+        existingUser.PhotoUrl = user.PhotoUrl;
+        existingUser.Points = user.Points;
+        existingUser.Rating = user.Rating;
+        existingUser.IdNumber = user.IdNumber;
+        
+        try
+        {
+            _userRepository.Update(existingUser);
+            await _unitOfWork.CompleteAsync();
+            
+            return new UserResponse(existingUser);
+        }
+        catch (Exception e)
+        {
+            return new UserResponse($"An error occurred while updating the user: {e.Message}");
+        }
+        
     }
 
-    public Task<UserResponse> DeleteAsync(int id)
+    public async Task<UserResponse> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var existingUser = await _userRepository.FindByIdAsync(id);
+        
+        if(existingUser == null)
+            return new UserResponse("User not found.");
+        try
+        {
+            _userRepository.Remove(existingUser);
+            await _unitOfWork.CompleteAsync();
+            
+            return new UserResponse(existingUser);
+        }
+        catch (Exception e)
+        {
+            return new UserResponse($"An error occurred while deleting the user: {e.Message}");
+        }
+        
     }
 }
