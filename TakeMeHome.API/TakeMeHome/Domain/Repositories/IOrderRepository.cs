@@ -7,7 +7,7 @@ public interface IOrderRepository
     Task<IEnumerable<Order>> ListAsync();
     Task AddAsync(Order order);
     Task<Order> FindByIdAsync(int id);
-    Task<IEnumerable<Order>> FindByOrderStatusId(string orderStatusId);
+    Task<IEnumerable<Order>> FindByOrderStatusId(int orderStatusId);
     void Update(Order order);
     void Remove(Order order);
 }

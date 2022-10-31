@@ -22,6 +22,11 @@ public class UserService : IUserService
         return await _userRepository.ListAsync();
     }
 
+    public async Task<User> FindByUserNameAsync(string userName)
+    {
+        return await _userRepository.FindByUserNameAsync(userName);
+    }
+
     public async Task<UserResponse> SaveAsync(User user)
     {
         try

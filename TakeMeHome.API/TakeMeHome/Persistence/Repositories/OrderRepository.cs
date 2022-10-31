@@ -30,11 +30,11 @@ public class OrderRepository : BaseRepository, IOrderRepository
             .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    public async Task<IEnumerable<Order>> FindByOrderStatusId(string orderStatusId)
+    public async Task<IEnumerable<Order>> FindByOrderStatusId(int orderStatusId)
     {
         return await _context.Orders
             .Include(p => p.Status)
-            .Where(p => p.Status.Id == orderStatusId)
+            .Where(p => p.StatusId == orderStatusId)
             .ToListAsync();
     }
 
