@@ -7,6 +7,6 @@ public class Comment
     public string Content { get; set; }
     
     //Relationships
-    public int OrderId { get; set; }
-    public Order Order { get; set; }
+    //public int OrderId { get; set; }
+    //public Order Order { get; set; }
 }

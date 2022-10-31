@@ -11,6 +11,7 @@ using TakeMeHome.API.TakeMeHome.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors();
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -18,10 +19,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 //Add Database Connection
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(
-        options => options.UseMySQL(connectionString)
+        options => options.UseMySQL("server=localhost;user=root;password=root;database=tmh")
             .LogTo(Console.WriteLine, LogLevel.Information)
             .EnableSensitiveDataLogging()
             .EnableDetailedErrors());
@@ -44,6 +47,12 @@ builder.Services.AddAutoMapper(
     typeof(ResourceToModelProfile));
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+using (var context = scope.ServiceProvider.GetService<AppDbContext>())
+{
+    context.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

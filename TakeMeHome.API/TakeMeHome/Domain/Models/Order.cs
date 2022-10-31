@@ -6,8 +6,8 @@ public class Order
     public string OrderCode { get; set; }
     public string OriginCountry { get; set; }
     public string OrderDestination { get; set; }
-    public DateOnly RequestDate { get; set; }
-    public DateOnly DeadlineDate { get; set; }
+    public DateTime RequestDate { get; set; }
+    public DateTime DeadlineDate { get; set; }
     public int CurrentProcess { get; set; }
 
     //Relationships
@@ -17,12 +17,12 @@ public class Order
     public int ClientId { get; set; }
     public User Client { get; set; }
     
-    public int ProductId { get; set; }
-    public Product Product { get; set; }
+    //public int ProductId { get; set; }
+    //public Product Product { get; set; }
     
     public int StatusId { get; set; }
     public OrderStatus Status { get; set; }
     
-    public int CommentId { get; set; }
-    public Comment Comment { get; set; }
+    //public int CommentId { get; set; }
+    //public Comment Comment { get; set; }
 }

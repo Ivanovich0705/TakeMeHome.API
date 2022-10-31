@@ -10,6 +10,6 @@ public class Product
     public string Currency { get; set; }
     
     //Relationships
-    public int OrderId { get; set; }
-    public Order Order { get; set; }
+    //public int OrderId { get; set; }
+    //public Order Order { get; set; }
 }
