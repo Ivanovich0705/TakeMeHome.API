@@ -9,5 +9,7 @@ public class ResourceToModelProfile : Profile
     protected ResourceToModelProfile()
     {
         CreateMap<SaveUserResource, User>();
+        CreateMap<SaveOrderResource, Order>();
+        CreateMap<SaveOrderStatusResource, OrderStatus>();
     }
 }

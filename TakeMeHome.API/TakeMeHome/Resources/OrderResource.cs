@@ -9,4 +9,5 @@ public class OrderResource
     public DateOnly RequestDate { get; set; }
     public DateOnly DeadlineDate { get; set; }
     public int CurrentProcess { get; set; }
+    public OrderStatusResource OrderStatus { get; set; }
 }

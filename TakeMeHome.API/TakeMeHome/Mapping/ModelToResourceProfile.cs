@@ -8,6 +8,9 @@ public class ModelToResourceProfile : Profile
 {
     protected ModelToResourceProfile()
     {
-       CreateMap<User, UserResource>(); 
+       CreateMap<User, UserResource>();
+       CreateMap<Order, OrderResource>();
+       CreateMap<OrderStatus, OrderStatusResource>();
+       
     }
 }
