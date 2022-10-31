@@ -48,6 +48,7 @@ public class UserService : IUserService
         existingUser.Username = user.Username;
         existingUser.Password = user.Password;
         existingUser.Email = user.Email;
+        existingUser.Country = user.Country;
         existingUser.DateOfBirth = user.DateOfBirth;
         existingUser.Phone = user.Phone;
         existingUser.Description = user.Description;
