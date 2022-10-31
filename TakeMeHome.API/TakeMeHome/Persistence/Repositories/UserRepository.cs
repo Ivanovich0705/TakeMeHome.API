@@ -28,7 +28,8 @@ public class CategoryRepository : BaseRepository, IUserRepository
 
     public async Task<User> FindByUserNameAsync(string userName)
     {
-        return await _context.Users.FindAsync(userName);
+        return await _context.Users
+            .FirstOrDefaultAsync(p=>p.Username == userName);
     }
 
     public void Update(User user)
