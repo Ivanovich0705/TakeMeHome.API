@@ -27,6 +27,11 @@ public class OrderService : IOrderService
         return await _orderRepository.FindByOrderStatusId(orderStatusId);
     }
 
+    public async Task<IEnumerable<Order>> ListByUserIdAsync(int userId)
+    {
+        return await _orderRepository.FindyByUserId(userId);
+    }
+
     public async Task<OrderResponse> SaveAsync(Order order)
     {
         //Validate OrderStatusId

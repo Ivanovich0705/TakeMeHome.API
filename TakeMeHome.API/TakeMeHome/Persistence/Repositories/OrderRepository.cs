@@ -38,6 +38,14 @@ public class OrderRepository : BaseRepository, IOrderRepository
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<Order>> FindyByUserId(int userId)
+    {
+        return await _context.Orders
+            .Include(p => p.Status)
+            .Where(p => p.UserId == userId)
+            .ToListAsync();
+    }
+
     public void Update(Order order)
     {
         _context.Orders.Update(order);
