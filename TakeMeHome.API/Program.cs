@@ -18,7 +18,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
+builder.Services.AddSwaggerGen(c =>
+{
+//c.SwaggerDoc("v1");
+}).AddSwaggerGenNewtonsoftSupport();
 
 //Add Database Connection
 
@@ -33,7 +38,7 @@ builder.Services.AddDbContext<AppDbContext>(
 builder.Services.AddRouting(options=> options.LowercaseUrls = true);
 
 //Dependency Injection Configuration
-builder.Services.AddScoped<IUserRepository, CategoryRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();

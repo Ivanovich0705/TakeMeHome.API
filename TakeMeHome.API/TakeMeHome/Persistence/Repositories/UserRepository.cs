@@ -5,9 +5,9 @@ using TakeMeHome.API.TakeMeHome.Persistence.Contexts;
 
 namespace TakeMeHome.API.TakeMeHome.Persistence.Repositories;
 
-public class CategoryRepository : BaseRepository, IUserRepository
+public class UserRepository : BaseRepository, IUserRepository
 {
-    public CategoryRepository(AppDbContext context) : base(context)
+    public UserRepository(AppDbContext context) : base(context)
     {
     }
 

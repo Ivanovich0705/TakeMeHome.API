@@ -6,6 +6,7 @@ namespace TakeMeHome.API.TakeMeHome.Domain.Services;
 public interface IUserService
 {
     Task<IEnumerable<User>> ListAsync();
+    Task<User> FindByIdAsync(int id);
     Task<User> FindByUserNameAsync(string userName);
     Task<UserResponse> SaveAsync(User user);
     Task<UserResponse> UpdateAsync(int id, User user);
