@@ -6,7 +6,7 @@ namespace TakeMeHome.API.TakeMeHome.Mapping;
 
 public class ResourceToModelProfile : Profile
 {
-    protected ResourceToModelProfile()
+    public ResourceToModelProfile()
     {
         CreateMap<SaveUserResource, User>();
         CreateMap<SaveOrderResource, Order>();

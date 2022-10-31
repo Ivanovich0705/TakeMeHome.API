@@ -7,7 +7,7 @@ public class SaveUserResource
     public string Password { get; set; }
     public string Email { get; set; }
     public string Country { get; set; }
-    public DateOnly DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
     public string IdNumber { get; set; }
     public string Description { get; set; }
     public string PhotoUrl { get; set; }

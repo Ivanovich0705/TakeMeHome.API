@@ -15,10 +15,10 @@ public class SaveOrderResource
     public string OrderDestination { get; set; }
     
     [Required]
-    public DateOnly RequestDate { get; set; }
+    public DateTime RequestDate { get; set; }
     
     [Required]
-    public DateOnly DeadlineDate { get; set; }
+    public DateTime DeadlineDate { get; set; }
     
     public int CurrentProcess { get; set; }
     
