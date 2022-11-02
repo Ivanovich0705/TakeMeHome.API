@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderStatus> OrderStatus { get; set; }
+    public DbSet<Product> Products { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -44,6 +45,9 @@ public class AppDbContext : DbContext
             .WithOne(p=>p.Status)
             .HasForeignKey(p=>p.StatusId);
 
+        
+            
+
         //Orders
         builder.Entity<Order>().ToTable("Orders");
         builder.Entity<Order>().HasKey(p => p.Id);
@@ -61,6 +65,20 @@ public class AppDbContext : DbContext
         builder.Entity<OrderStatus>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<OrderStatus>().Property(p => p.Status).IsRequired().HasMaxLength(15);
         
+        //Products
+        builder.Entity<Product>().ToTable("Products");
+        builder.Entity<Product>().HasKey(p => p.Id);
+        builder.Entity<Product>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Product>().Property(p => p.Name).IsRequired();
+        builder.Entity<Product>().Property(p => p.Price).IsRequired();
+        builder.Entity<Product>().Property(p => p.Store).IsRequired();
+        builder.Entity<Product>().Property(p => p.ProductUrl).IsRequired();
+        builder.Entity<Product>().Property(p => p.Currency).IsRequired();
+
+        builder.Entity<Order>()
+            .HasOne(p => p.Product)
+            .WithOne(p => p.Order)
+            .HasForeignKey<Product>(p => p.OrderId);
         
         //App Naming Conventions
         builder.UseSnakeCaseNamingConvention();

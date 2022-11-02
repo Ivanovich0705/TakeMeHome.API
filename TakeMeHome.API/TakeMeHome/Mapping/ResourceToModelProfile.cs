@@ -11,5 +11,6 @@ public class ResourceToModelProfile : Profile
         CreateMap<SaveUserResource, User>();
         CreateMap<SaveOrderResource, Order>();
         CreateMap<SaveOrderStatusResource, OrderStatus>();
+        CreateMap<SaveProductResource, Product>();
     }
 }
