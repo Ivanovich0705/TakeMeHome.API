@@ -35,17 +35,13 @@ public class OrderService : IOrderService
     public async Task<OrderResponse> SaveAsync(Order order)
     {
         //Validate OrderStatusId
-        var existingOrderStatus = await _orderStatusRepository.FindByIdAsync(order.StatusId);
+        //var existingOrderStatus = await _orderStatusRepository.FindByIdAsync(order.StatusId);
         
-        //Validate Order Code
-        //TODO: VALIDATE ORDER CODE
-        //var existingOrder = await _orderRepository.Find(order.OrderCode);
-        
-        if (existingOrderStatus == null)
-        {
-            return new OrderResponse("Invalid OrderStatusId.");
-        }
-        else
+        //if (existingOrderStatus == null)
+        //{
+        //    return new OrderResponse("Invalid OrderStatusId.");
+        //}
+        //else
         {
             try
             {
@@ -71,7 +67,7 @@ public class OrderService : IOrderService
         }
 
         //Validate OrderStatusId
-        var existingOrderStatus = await _orderStatusRepository.FindByIdAsync(order.StatusId);
+        var existingOrderStatus = await _orderStatusRepository.FindByIdAsync(order.OrderStatusId);
         
         if (existingOrderStatus == null)
         {
@@ -79,7 +75,7 @@ public class OrderService : IOrderService
         }
         //IF ANY ERROR, MAYBE UPDATING STATUSID
         existingOrder.OrderCode = order.OrderCode;
-        existingOrder.StatusId= order.StatusId;
+        existingOrder.OrderStatusId= order.OrderStatusId;
         existingOrder.OriginCountry = order.OriginCountry;
         existingOrder.OrderDestination = order.OrderDestination;
         existingOrder.RequestDate = order.RequestDate;

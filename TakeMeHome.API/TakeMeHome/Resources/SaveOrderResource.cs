@@ -12,6 +12,12 @@ public class SaveOrderResource
     public string OriginCountry { get; set; }
     
     [Required]
+    public int UserId { get; set; }
+    
+    [Required]
+    public int ClientId { get; set; }
+
+    [Required]
     public string OrderDestination { get; set; }
     
     [Required]

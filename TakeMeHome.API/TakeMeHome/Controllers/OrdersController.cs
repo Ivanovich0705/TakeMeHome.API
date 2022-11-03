@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TakeMeHome.API.Shared.Extensions;
 using TakeMeHome.API.TakeMeHome.Domain.Models;
 using TakeMeHome.API.TakeMeHome.Domain.Services;
 using TakeMeHome.API.TakeMeHome.Resources;
@@ -34,5 +35,19 @@ public class OrdersController : ControllerBase
         var resources = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderResource>>(orders);
         return resources;
     }
-    
+    [HttpPost]
+    public async Task<IActionResult> PostAsync([FromBody] SaveOrderResource resource)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.GetErrorMessages());
+
+        var order = _mapper.Map<SaveOrderResource, Order>(resource);
+        var result = await _orderService.SaveAsync(order);
+
+        if (!result.Success)
+            return BadRequest(result.Message);
+
+        var orderResource = _mapper.Map<Order, OrderResource>(result.Resource);
+        return Ok(orderResource);
+    }
 }

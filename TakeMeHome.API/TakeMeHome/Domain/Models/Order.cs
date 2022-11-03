@@ -17,12 +17,12 @@ public class Order
     public int ClientId { get; set; }
     public User Client { get; set; }
     
-    public int ProductId { get; set; }
+    //public int ProductId { get; set; }
     public Product Product { get; set; }
     
-    public int StatusId { get; set; }
+    public int OrderStatusId { get; set; }
     public OrderStatus Status { get; set; }
     
     //public int CommentId { get; set; }
-    //public Comment Comment { get; set; }
+    public Comment Comment { get; set; }
 }

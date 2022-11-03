@@ -7,4 +7,5 @@ public class SaveProductResource
     public int Price { get; set; }
     public string Store { get; set; }
     public string Currency { get; set; }
+    public int OrderId { get; set; }
 }

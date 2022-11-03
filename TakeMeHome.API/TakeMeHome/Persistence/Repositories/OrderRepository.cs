@@ -37,7 +37,7 @@ public class OrderRepository : BaseRepository, IOrderRepository
         return await _context.Orders
             .Include(p => p.Status)
             .Include(p=>p.Product)
-            .Where(p => p.StatusId == orderStatusId)
+            .Where(p => p.OrderStatusId == orderStatusId)
             .ToListAsync();
     }
 

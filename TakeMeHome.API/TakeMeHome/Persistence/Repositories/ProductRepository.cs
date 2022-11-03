@@ -24,13 +24,9 @@ public class ProductRepository : BaseRepository, IProductRepository
 
     public async Task<Product> FindByIdAsync(int id)
     {
-        return await _context.Products.FindAsync(id);
-    }
-    
-    public async Task<Product> FindByOrderIdAsync(int orderId)
-    {
         return await _context.Products
-            .FirstOrDefaultAsync(p=>p.OrderId == orderId);    }
+            .FirstOrDefaultAsync(p => p.Id == id);
+    }
 
     public void Update(Product product)
     {

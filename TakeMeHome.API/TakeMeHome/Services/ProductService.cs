@@ -36,11 +36,7 @@ public class ProductService : IProductService
             return new ProductResponse($"An error occurred while saving the product: {e.Message}");
         }
     }
-
-    public async Task<Product> FindByOrderIdAsync(int orderId)
-    {
-        return await _productRepository.FindByOrderIdAsync(orderId);
-    }
+    
 
     public async Task<ProductResponse> UpdateAsync(int id, Product product)
     {

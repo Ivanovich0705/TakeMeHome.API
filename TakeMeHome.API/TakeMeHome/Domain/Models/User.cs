@@ -17,5 +17,6 @@ public class User
     public string Phone { get; set; }
 
     //Relationships
-    public IList<Order> Orders { get; set; } = new List<Order>();
+    public IList<Order> AsUserOrders { get; set; } = new List<Order>();
+    public IList<Order> AsClientOrders { get; set; } = new List<Order>();
 }

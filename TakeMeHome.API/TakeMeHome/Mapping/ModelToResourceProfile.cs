@@ -12,6 +12,7 @@ public class ModelToResourceProfile : Profile
        CreateMap<Order, OrderResource>();
        CreateMap<OrderStatus, OrderStatusResource>();
        CreateMap<Product, ProductResource>();
+       CreateMap<Comment, CommentResource>();
        
     }
 }

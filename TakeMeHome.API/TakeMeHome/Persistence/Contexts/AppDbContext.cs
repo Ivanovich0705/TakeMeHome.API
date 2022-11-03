@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderStatus> OrderStatus { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<Comment> Comments { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -36,17 +37,32 @@ public class AppDbContext : DbContext
         
         //Relationships
         builder.Entity<User>()
-            .HasMany(p => p.Orders)
-            .WithOne(p => p.User)
-            .HasForeignKey(p => p.UserId);
+            .HasMany(p=>p.AsUserOrders)
+            .WithOne(p=>p.User)
+            .HasForeignKey(p=>p.UserId);
+        
+        builder.Entity<User>()
+            .HasMany(p=>p.AsClientOrders)
+            .WithOne(p=>p.Client)
+            .HasForeignKey(p=>p.ClientId);
+
         
         builder.Entity<OrderStatus>()
             .HasMany(p=>p.Orders)
             .WithOne(p=>p.Status)
-            .HasForeignKey(p=>p.StatusId);
+            .HasForeignKey(p=>p.OrderStatusId);
 
-        
+        builder.Entity<Order>()
+            .HasOne(p => p.Product)
+            .WithOne(p => p.Order)
+            .HasForeignKey<Product>(p => p.OrderId);     
             
+        builder.Entity<Order>()
+            .HasOne(p => p.Comment)
+            .WithOne(p => p.Order)
+            .HasForeignKey<Comment>(p => p.OrderId); 
+        
+       
 
         //Orders
         builder.Entity<Order>().ToTable("Orders");
@@ -74,12 +90,14 @@ public class AppDbContext : DbContext
         builder.Entity<Product>().Property(p => p.Store).IsRequired();
         builder.Entity<Product>().Property(p => p.ProductUrl).IsRequired();
         builder.Entity<Product>().Property(p => p.Currency).IsRequired();
-
-        builder.Entity<Order>()
-            .HasOne(p => p.Product)
-            .WithOne(p => p.Order)
-            .HasForeignKey<Product>(p => p.OrderId);
         
+        //Comments
+        builder.Entity<Comment>().ToTable("Comments");
+        builder.Entity<Comment>().HasKey(p => p.Id);
+        builder.Entity<Comment>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Comment>().Property(p => p.Content).IsRequired();
+        builder.Entity<Comment>().Property(p => p.Stars).IsRequired();
+                
         //App Naming Conventions
         builder.UseSnakeCaseNamingConvention();
     }
