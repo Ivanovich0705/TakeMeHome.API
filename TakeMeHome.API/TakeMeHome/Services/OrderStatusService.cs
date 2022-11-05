@@ -21,6 +21,15 @@ public class OrderStatusService : IOrderStatusService
     {
         return await _orderStatusRepository.ListAsync();
     }
+    
+    public async Task<OrderStatusResponse> FindByIdAsync(int id)
+    {
+        var existingOrderStatus = await _orderStatusRepository.FindByIdAsync(id);
+        if (existingOrderStatus == null)
+            return new OrderStatusResponse("OrderStatus not found.");
+
+        return new OrderStatusResponse(existingOrderStatus);
+    }
 
     public async Task<OrderStatusResponse> SaveAsync(OrderStatus orderStatus)
     {
