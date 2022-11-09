@@ -15,6 +15,8 @@ public class AppDbContext : DbContext
     public DbSet<OrderStatus> OrderStatus { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<Notifications> Notifications { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -45,6 +47,11 @@ public class AppDbContext : DbContext
             .HasMany(p=>p.AsClientOrders)
             .WithOne(p=>p.Client)
             .HasForeignKey(p=>p.ClientId);
+        
+        builder.Entity<User>()
+            .HasMany(p=>p.Notifications)
+            .WithOne(p=>p.User)
+            .HasForeignKey(p=>p.UserId);
 
         
         builder.Entity<OrderStatus>()
@@ -98,6 +105,12 @@ public class AppDbContext : DbContext
         builder.Entity<Comment>().Property(p => p.Content).IsRequired();
         builder.Entity<Comment>().Property(p => p.Stars).IsRequired();
                 
+        //Notifications
+        builder.Entity<Notifications>().ToTable("Notifications");
+        builder.Entity<Notifications>().HasKey(p => p.Id);
+        builder.Entity<Notifications>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Notifications>().Property(p => p.Type).IsRequired();
+
         //App Naming Conventions
         builder.UseSnakeCaseNamingConvention();
     }
