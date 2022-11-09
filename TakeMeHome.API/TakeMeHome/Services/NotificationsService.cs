@@ -21,7 +21,10 @@ public class NotificationsService : INotificationsService
     {
         return await _notificationsRepository.ListAsync();
     }
-
+    public async Task<IEnumerable<Notifications>> ListByUserIdAsync(int userId)
+    {
+        return await _notificationsRepository.FindByUserId(userId);
+    }
     public async Task<NotificationsResponse> SaveAsync(Notifications notifications)
     {
         try
@@ -59,8 +62,22 @@ public class NotificationsService : INotificationsService
         }
     }
 
-    public Task<NotificationsResponse> DeleteAsync(int id)
+    public async Task<NotificationsResponse> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var existingNotifications = await _notificationsRepository.FindIdAsync(id);
+        
+        if(existingNotifications == null)
+            return new NotificationsResponse("Notifications not found.");
+        try
+        {
+            _notificationsRepository.Remove(existingNotifications);
+            await _unitOfWork.CompleteAsync();
+            
+            return new NotificationsResponse(existingNotifications);
+        }
+        catch (Exception e)
+        {
+            return new NotificationsResponse($"An Notifications occurred while deleting the comment: {e.Message}");
+        }
     }
 }
