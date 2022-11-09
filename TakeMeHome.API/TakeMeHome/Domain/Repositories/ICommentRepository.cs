@@ -7,7 +7,7 @@ public interface ICommentRepository
     Task<IEnumerable<Comment>> ListAsync();
     Task AddAsync(Comment comment);
     Task<Comment> FindByIdAsync(int id);
-    Task<IEnumerable<Comment>> FindyByUserId(int userId);
+    Task<IEnumerable<Comment>> FindByUserId(int userId);
     void Update(Comment comment);
     void Remove(Comment comment);
 }

@@ -7,7 +7,6 @@ using TakeMeHome.API.TakeMeHome.Resources;
 
 namespace TakeMeHome.API.TakeMeHome.Controllers;
 
-
 [Route("/api/v1/[controller]")]
 public class CommentsController : ControllerBase
 {
@@ -45,11 +44,41 @@ public class CommentsController : ControllerBase
     }
     
     [HttpGet]
-    [Route("/comments/{user_id}")]
-    public async Task<IEnumerable<OrderResource>> GetByUserId(int user_id)
+    [Route("{user_id}")]
+    public async Task<IEnumerable<CommentResource>> GetByUserId(int user_id)
     {
         var comments = await _commentService.ListByUserIdAsync(user_id);
-        var resources = _mapper.Map<IEnumerable<Comment>, IEnumerable<OrderResource>>(comments);
+        var resources = _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentResource>>(comments);
         return resources;
+    }
+    
+    [HttpDelete]
+    [Route("{comment_id}")]
+    public async Task<IActionResult> DeleteAsync(int comment_id)
+    {
+        var result = await _commentService.DeleteAsync(comment_id);
+        
+        if (!result.Success)
+            return BadRequest(result.Message);
+        
+        var commentResource = _mapper.Map<Comment, CommentResource>(result.Resource);
+        return Ok(commentResource);
+    }
+    
+    [HttpPut]
+    [Route("{comment_id}")]
+    public async Task<IActionResult> PutAsync(int comment_id, [FromBody] SaveCommentResource resource)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.GetErrorMessages());
+        
+        var comment = _mapper.Map<SaveCommentResource, Comment>(resource);
+        var result = await _commentService.UpdateAsync(comment_id, comment);
+        
+        if (!result.Success)
+            return BadRequest(result.Message);
+        
+        var commentResource = _mapper.Map<Comment, CommentResource>(result.Resource);
+        return Ok(commentResource);
     }
 }
