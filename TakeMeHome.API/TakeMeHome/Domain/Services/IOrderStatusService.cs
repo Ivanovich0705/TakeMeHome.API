@@ -7,6 +7,7 @@ public interface IOrderStatusService
 {
     Task<IEnumerable<OrderStatus>> ListAsync();
     Task<OrderStatusResponse> SaveAsync(OrderStatus orderStatus);
+    Task<OrderStatusResponse> FindByIdAsync(int id);
     Task<OrderStatusResponse> UpdateAsync(int id, OrderStatus orderStatus);
     Task<OrderStatusResponse> DeleteAsync(int id);
 }
