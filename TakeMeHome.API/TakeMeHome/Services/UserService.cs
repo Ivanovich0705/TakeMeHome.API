@@ -31,7 +31,11 @@ public class UserService : IUserService
     {
         return await _userRepository.FindByUserNameAsync(userName);
     }
-
+    
+    public async Task<User> FindByEmailAndPasswordAsync(string email, string password)
+    {
+        return await _userRepository.FindByEmailAndPasswordAsync(email, password);
+    }
     public async Task<UserResponse> SaveAsync(User user)
     {
         try

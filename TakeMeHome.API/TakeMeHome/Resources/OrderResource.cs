@@ -10,9 +10,8 @@ public class OrderResource
     public int ClientId { get; set; }
     public string OriginCountry { get; set; }
     public string OrderDestination { get; set; }
-    public ProductResource Product { get; set; }
     public DateTime RequestDate { get; set; }
     public DateTime DeadlineDate { get; set; }
     public int CurrentProcess { get; set; }
-    public OrderStatusResource Status { get; set; }
+    public OrderStatusResource OrderStatus { get; set; }
 }

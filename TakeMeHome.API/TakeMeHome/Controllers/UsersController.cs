@@ -28,6 +28,43 @@ public class UsersController : ControllerBase
         return resources;
     }
     
+    
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<IActionResult> FindByIdAsync(int id)
+    {
+        var result = await _userService.FindByIdAsync(id);
+        if (result == null)
+            return BadRequest("User not found");
+        var resource = _mapper.Map<User, UserResource>(result);
+        return Ok(resource);
+    }
+    
+    
+    //get by email and password
+    [HttpGet]
+    [Route("{email}/{password}")]
+    public async Task<IActionResult> FindByEmailAndPasswordAsync(string email, string password)
+    {
+        var result = await _userService.FindByEmailAndPasswordAsync(email, password);
+        if (result == null)
+            return BadRequest("Email or password is incorrect");
+        var resource = _mapper.Map<User, UserResource>(result);
+        return Ok(resource);
+    }
+    
+    //get by username
+    [HttpGet]
+    [Route("username={username}")]
+    public async Task<IActionResult> FindByUsernameAsync(string username)
+    {
+        var result = await _userService.FindByUserNameAsync(username);
+        if (result == null)
+            return BadRequest("User not found");
+        var resource = _mapper.Map<User, UserResource>(result);
+        return Ok(resource);
+    }
+
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody] SaveUserResource resource)
     {
@@ -55,6 +92,23 @@ public class UsersController : ControllerBase
         var userResource = _mapper.Map<User, UserResource>(result.Resource);
         return Ok(userResource);
     }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutAsync(int id, [FromBody] SaveUserResource resource)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.GetErrorMessages());
+        
+        var user = _mapper.Map<SaveUserResource, User>(resource);
+        var result = await _userService.UpdateAsync(id, user);
+        
+        if (!result.Success)
+            return BadRequest(result.Message);
+        
+        var userResource = _mapper.Map<User, UserResource>(result.Resource);
+        return Ok(userResource);
+    }
+    
     
     [HttpPatch("{id}")]
     public async Task<IActionResult> UpdateAsync(int id, [FromBody] JsonPatchDocument<User> resource)

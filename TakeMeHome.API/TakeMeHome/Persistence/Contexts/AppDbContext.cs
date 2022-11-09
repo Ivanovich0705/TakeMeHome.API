@@ -49,14 +49,14 @@ public class AppDbContext : DbContext
         
         builder.Entity<OrderStatus>()
             .HasMany(p=>p.Orders)
-            .WithOne(p=>p.Status)
+            .WithOne(p=>p.OrderStatus)
             .HasForeignKey(p=>p.OrderStatusId);
 
         builder.Entity<Order>()
             .HasOne(p => p.Product)
             .WithOne(p => p.Order)
-            .HasForeignKey<Product>(p => p.OrderId);     
-            
+            .HasForeignKey<Product>(p => p.OrderId);
+
         builder.Entity<Order>()
             .HasOne(p => p.Comment)
             .WithOne(p => p.Order)

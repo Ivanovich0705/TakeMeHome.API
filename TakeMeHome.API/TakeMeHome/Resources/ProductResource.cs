@@ -8,4 +8,5 @@ public class ProductResource
     public int Price { get; set; }
     public string Store { get; set; }
     public string Currency { get; set; }
+    public OrderResource Order { get; set; }
 }

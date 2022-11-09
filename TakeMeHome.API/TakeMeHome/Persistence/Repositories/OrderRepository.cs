@@ -14,7 +14,7 @@ public class OrderRepository : BaseRepository, IOrderRepository
     public async Task<IEnumerable<Order>> ListAsync()
     {
         return await _context.Orders
-            .Include(p => p.Status)
+            .Include(p => p.OrderStatus)
             .Include(p=>p.Product)
             .ToListAsync();
     }
@@ -27,7 +27,7 @@ public class OrderRepository : BaseRepository, IOrderRepository
     public async Task<Order> FindByIdAsync(int id)
     {
         return await _context.Orders
-            .Include(p => p.Status)
+            .Include(p => p.OrderStatus)
             .Include(p=>p.Product)
             .FirstOrDefaultAsync(p => p.Id == id);
     }
@@ -35,7 +35,7 @@ public class OrderRepository : BaseRepository, IOrderRepository
     public async Task<IEnumerable<Order>> FindByOrderStatusId(int orderStatusId)
     {
         return await _context.Orders
-            .Include(p => p.Status)
+            .Include(p => p.OrderStatus)
             .Include(p=>p.Product)
             .Where(p => p.OrderStatusId == orderStatusId)
             .ToListAsync();
@@ -44,7 +44,7 @@ public class OrderRepository : BaseRepository, IOrderRepository
     public async Task<IEnumerable<Order>> FindyByUserId(int userId)
     {
         return await _context.Orders
-            .Include(p => p.Status)
+            .Include(p => p.OrderStatus)
             .Where(p => p.UserId == userId)
             .ToListAsync();
     }

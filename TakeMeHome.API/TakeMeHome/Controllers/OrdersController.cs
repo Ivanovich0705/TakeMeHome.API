@@ -11,12 +11,16 @@ namespace TakeMeHome.API.TakeMeHome.Controllers;
 public class OrdersController : ControllerBase
 {
     private readonly IOrderService _orderService;
+    private readonly IUserService _userService;
+    private readonly IOrderStatusService _orderStatusService;
     private readonly IMapper _mapper;
 
-    public OrdersController(IOrderService orderService, IMapper mapper)
+    public OrdersController(IOrderService orderService, IMapper mapper, IUserService userService, IOrderStatusService orderStatusService)
     {
         _orderService = orderService;
         _mapper = mapper;
+        _userService = userService;
+        _orderStatusService = orderStatusService;
     }
 
     [HttpGet]
@@ -40,7 +44,19 @@ public class OrdersController : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState.GetErrorMessages());
-
+        
+         var existingClient = await _userService.FindByIdAsync(resource.UserId);
+         if (existingClient == null)
+                return BadRequest("Client doesnt exists");
+         
+         var existingTourist = await _userService.FindByIdAsync(resource.ClientId);
+            if (existingTourist == null)
+                    return BadRequest("Tourist doesnt exists");
+         
+        var exisingStatus = await _orderStatusService.FindByIdAsync(resource.OrderStatusId);
+        if (exisingStatus == null)
+            return BadRequest("Order Status doesnt exists");
+            
         var order = _mapper.Map<SaveOrderResource, Order>(resource);
         var result = await _orderService.SaveAsync(order);
 
