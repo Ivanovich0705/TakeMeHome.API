@@ -23,7 +23,7 @@ public class CommentService : ICommentService
 
     public async Task<IEnumerable<Comment>> ListByUserIdAsync(int userId)
     {
-        return await _commentRepository.FindyByUserId(userId);
+        return await _commentRepository.FindByUserId(userId);
     }
 
     public async Task<CommentResponse> SaveAsync(Comment comment)

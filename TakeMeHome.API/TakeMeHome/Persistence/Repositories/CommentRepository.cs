@@ -32,14 +32,15 @@ public class CommentRepository : BaseRepository, ICommentRepository
 
     }
 
-    public async Task<IEnumerable<Comment>> FindyByUserId(int userId)
+    public async Task<IEnumerable<Comment>> FindByUserId(int userId)
     {
         return await _context.Comments
-            .Where(p => p.Order.ClientId == userId)
-            .Include(p => p.Order.UserId)
+            .Where(p => p.Order.UserId.Equals(userId))
+            //.Include(p => p.Order.User)
+            .Include(p=>p.Order.Client)
             .ToListAsync();
     }
-
+    
     public void Update(Comment comment)
     {
         _context.Comments.Update(comment);
