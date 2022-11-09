@@ -7,7 +7,9 @@ public class OrderResource
     public int Id { get; set; }
     public string OrderCode { get; set; }
     public int UserId { get; set; }
+    public  UserResource User { get; set; }
     public int ClientId { get; set; }
+    public UserResource Client { get; set; }
     public string OriginCountry { get; set; }
     public string OrderDestination { get; set; }
     public ProductResource Product { get; set; }
